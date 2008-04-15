@@ -1,0 +1,83 @@
+
+                          Contribution Rocq/COC
+                          =====================
+
+This directory contains:
+
+    - A formalization in Coq of the metatheory of the Calculus of
+      Constructions and the interface of a standalone proof-checker
+      based on this type system.
+    - The proof-checker, produced by extraction.
+
+Author & Date: Bruno Barras
+               INRIA-Rocquencourt
+               October 1997
+E-mail : Bruno.Barras@inria.fr
+WWW    : http://pauillac.inria.fr/~barras
+
+Installation procedure:
+-----------------------
+
+  To get this contribution compiled, type
+
+    make 
+
+  or
+
+    make opt
+
+  It will compile all the proofs and perform the extraction. Then, it will
+compile the proof-checker (called coc). As an example, the file newman.coc
+is checked with coc.
+
+
+Description:
+------------
+
+  The essential step of the formal verification of a proof-checker
+such as Coq is the verification of its kernel: a type-checker for the
+Calculus of Inductive Constructions (CIC) which is its underlying
+formalism. The present work is a first small-scale attempt on a
+significative fragment of CIC: the Calculus of Constructions (CC)
+designed by Huet and Coquand in 1985. It is defined with De Bruijn
+indices notation. The whole metatheory of this calculus is proved in
+the following order:
+
+  - Confluence of beta-reduction
+  - Inversion lemma
+  - Thinning lemma
+  - Subsitution lemma
+  - Type Correctness
+  - Subject Reduction
+  - Strong Normalisation
+  - Decidability of Type Inference and Type Checking
+
+  From the latter proof, we extract a certified Objective Caml
+program, which performs type inference (or type-checking) for an
+arbitrary typing judgement in CC. Integrating this program in a larger
+system, including a parser and pretty-printer, we obtain a stand-alone
+proof-checker, called Coc, for the Calculus of Constructions. As an
+example, the formal proof of Newman's lemma, build with Coq, can be
+re-verified by Coc with reasonable performance.
+
+  Upon this kernel, we formalized the interface of a small
+proof-checker, based on the type-checking functions above, but it
+seems the ideas can generalize to other type systems, as far as they
+are based on the proofs-as-terms principle.  We suppose that the
+metatheory of the corresponding type system is proved (up to type
+decidability). We specify and certify the toplevel loop, the system
+invariant, and the error messages.
+
+
+Further information on this contribution:
+-----------------------------------------
+
+  A first description of the proofs can be found as an INRIA technical
+report (in french), number 3026, october 1996.
+
+  The current updated version was described in a paper (see
+coqincoq.ps.gz). It also describes the strong normalization proof.
+
+  Last, the proof-checker was formalized in another paper included in
+this contribution. See ./proof-checker.ps.gz
+
