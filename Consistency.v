@@ -79,8 +79,7 @@ inversion H2.
 inversion H2.
 apply False_ind.
 generalize H3.
-case l0; simpl in |- *; try discriminate.
-intros tt ll; discriminate.
+case l0; simpl in |- *; try intros tt ll; discriminate.
 
 elim H0 with (1 := H5); intros.
 rewrite H6.
