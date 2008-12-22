@@ -549,30 +549,11 @@ elim H6; simpl in |- *; auto with coc core arith datatypes.
 
 discriminate H10.
 
-unfold skel_int in |- *.
-simpl in |- *.
-elim
- class_subst
-  with
-    (class_of_ik i)
-    (cls_of_int ipg)
-    v
-    T0
-    k
-    (cls_of_int ipf)
-    (cls_of_int ipe); auto with coc core arith datatypes.
-replace
- (typ_skel
-    match
-      cl_term U (TCs class (cl_term T0 (cls_of_int ipe)) (cls_of_int ipe)),
-      cl_term T0 (cls_of_int ipe)
-    with
-    | Trm, _ =>
-        cl_term U (TCs class (cl_term T0 (cls_of_int ipe)) (cls_of_int ipe))
-    | Typ s, _ => Typ s
-    | Knd s2, Knd s1 => Knd (PROD s1 s2)
-    | Knd s2, _ => Knd s2
-    end) with PROP.
+replace (skel_int (Prod T0 U) ipe) with PROP.
+simpl; fold Can.
+elim class_subst
+  with (class_of_ik i) (cls_of_int ipg) v T0 k
+     (cls_of_int ipf) (cls_of_int ipe); auto with coc core arith datatypes.
 apply eq_can_Pi; simpl in |- *; intros; auto with coc core arith datatypes.
 replace eq_cand with (eq_can PROP); auto with coc core arith datatypes.
 replace PROP with (skel_int T0 ipe).
@@ -702,6 +683,13 @@ elim H7; auto with coc core arith datatypes.
 elim skel_sound with e0 T0 (Srt s1); simpl in |- *;
  auto with coc core arith datatypes.
 
+unfold cls_of_int in |- *.
+elim H5; simpl in |- *; auto with coc core arith datatypes.
+
+unfold cls_of_int in |- *.
+elim H6; simpl in |- *; auto with coc core arith datatypes.
+
+unfold skel_int.
 generalize (skel_sound (T0 :: e0) U (Srt s2) H3).
 simpl in |- *.
 rewrite H7.
@@ -709,12 +697,6 @@ elim (cl_term U (TCs class (cl_term T0 (class_env e0)) (class_env e0)));
  simpl in |- *; auto with coc core arith datatypes.
 elim (cl_term T0 (class_env e0)); simpl in |- *;
  auto with coc core arith datatypes.
-
-unfold cls_of_int in |- *.
-elim H5; simpl in |- *; auto with coc core arith datatypes.
-
-unfold cls_of_int in |- *.
-elim H6; simpl in |- *; auto with coc core arith datatypes.
 
 apply H2; auto with coc core arith datatypes.
 Qed.
