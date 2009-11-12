@@ -22,7 +22,7 @@ Ered.v
 ETypes.v
 Equiv.v
 # ML files
-CAML = "$(CAMLOPTC) -pp $(CAMLP4)o"
+CAML = "$(CAMLOPTC) $(PP)"
 -custom "$(CAML) top.ml" "top.ml core.cmx" top.cmx
 -custom "$(CAMLOPTC) core.mli" "core.ml" core.cmi
 -custom "$(CAMLOPTC) core.ml" "core.cmi" core.cmx
