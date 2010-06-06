@@ -42,6 +42,7 @@ COQSRCLIBS:=-I $(COQLIB)/kernel -I $(COQLIB)/lib \
   -I $(COQLIB)/proofs -I $(COQLIB)/tactics \
   -I $(COQLIB)/toplevel \
   -I $(COQLIB)/plugins/cc \
+  -I $(COQLIB)/plugins/decl_mode \
   -I $(COQLIB)/plugins/dp \
   -I $(COQLIB)/plugins/extraction \
   -I $(COQLIB)/plugins/field \
@@ -49,7 +50,6 @@ COQSRCLIBS:=-I $(COQLIB)/kernel -I $(COQLIB)/lib \
   -I $(COQLIB)/plugins/fourier \
   -I $(COQLIB)/plugins/funind \
   -I $(COQLIB)/plugins/groebner \
-  -I $(COQLIB)/plugins/interface \
   -I $(COQLIB)/plugins/micromega \
   -I $(COQLIB)/plugins/omega \
   -I $(COQLIB)/plugins/quote \
@@ -81,6 +81,7 @@ COQDEP:=$(COQBIN)coqdep -c
 GALLINA:=$(COQBIN)gallina
 COQDOC:=$(COQBIN)coqdoc
 COQMKTOP:=$(COQBIN)coqmktop
+CAMLLIB:=$(shell $(CAMLBIN)ocamlc.opt -where)
 CAMLC:=$(CAMLBIN)ocamlc.opt -c -rectypes
 CAMLOPTC:=$(CAMLBIN)ocamlopt.opt -c -rectypes
 CAMLLINK:=$(CAMLBIN)ocamlc.opt -rectypes
@@ -90,7 +91,7 @@ CAMLP4EXTEND:=pa_extend.cmo pa_macro.cmo q_MLast.cmo
 CAMLP4OPTIONS:=
 CAML=$(CAMLOPTC) $(PP)
 COQE=$(COQBIN)coqtop $(COQLIBS) $(COQFLAGS) -batch -load-vernac-source
-PP:=-pp "$(CAMLP4BIN)$(CAMLP4)o -I . $(COQSRCLIBS) $(CAMLP4EXTEND) $(GRAMMARS) $(CAMLP4OPTIONS) -impl"
+PP:=-pp "$(CAMLP4BIN)$(CAMLP4)o -I $(CAMLLIB) unix.cma -I . $(COQSRCLIBS) $(CAMLP4EXTEND) $(GRAMMARS) $(CAMLP4OPTIONS) -impl"
 
 ###################################
 #                                 #
