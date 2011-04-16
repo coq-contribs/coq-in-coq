@@ -50,7 +50,7 @@ Require Export Names.
     ev_prod_r: coc.
 
 
-  Lemma is_free_var :
+  Definition is_free_var :
    forall (x : name) (e : expr), {expr_vars x e} + {~ expr_vars x e}.
 
 simple induction e.
@@ -76,7 +76,7 @@ elim H; intros;
  auto with coc; right; red in |- *; intros A; inversion A; 
  auto.
 
-Qed.
+Defined.
 
 
 
@@ -205,7 +205,7 @@ Qed.
 
 
 
-  Theorem expr_of_term :
+  Definition expr_of_term :
    forall (t : term) (l : prt_names),
    name_unique l ->
    free_db (length l) t -> {e : expr | term_expr_equiv l t e}.
@@ -265,7 +265,7 @@ apply fv_ext; auto with coc core arith datatypes.
 inversion_clear H2; auto with coc core arith datatypes.
 
 inversion_clear H2; auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
 
@@ -469,7 +469,7 @@ inversion H9.
 Qed.
 
 
-  Theorem term_of_expr :
+  Definition term_of_expr :
    forall (e : expr) (l : prt_names),
    {t : term | term_expr_equiv l t e} +
    {undef : prt_names | undef_vars e l undef &  undef <> nil}.
@@ -674,4 +674,4 @@ case x; simpl in |- *; intros.
 elim H5; auto with coc core arith datatypes.
 
 discriminate.
-Qed.
+Defined.

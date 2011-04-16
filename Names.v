@@ -23,9 +23,8 @@ Require Export MlTypes.
   Definition name := ml_string.
   Definition prt_names := list name.
 
-  Lemma name_dec : forall x y : name, {x = y} + {x <> y}.
-Proof ml_eq_string.
- 
+  Definition name_dec : forall x y : name, {x = y} + {x <> y}
+   := ml_eq_string.
 
   Definition var_of_nat (n : nat) : name := ml_x_int (int_of_nat n).
 
@@ -78,7 +77,7 @@ elim H4; auto with coc core arith datatypes.
 Qed.
 
 
-Lemma rmv :
+Definition rmv :
  forall (x : name) (l : prt_names),
  {l1 : prt_names | exists n : nat, insert _ x n l1 l} + {~ In _ x l}.
 (*
@@ -125,11 +124,11 @@ exists (S x0); auto with coc core arith datatypes.
 red in |- *; intros; apply notin.
 inversion H; auto with coc core arith datatypes.
 elim notfound; trivial.
-Qed.
+Defined.
 
 
 
-  Lemma find_free :
+  Definition find_free :
    forall (l : prt_names) (n : nat),
    {m : nat | n <= m &  ~ In _ (var_of_nat m) l}.
 (*
@@ -173,20 +172,20 @@ apply (le_Sn_n n).
 pattern n at 2 in |- *.
 replace n with m; auto with coc core arith datatypes.
 apply inj_var_of_nat; auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
 
 
 
-  Lemma find_free_var : forall l : prt_names, {x : name | ~ In _ x l}.
+  Definition find_free_var : forall l : prt_names, {x : name | ~ In _ x l}.
 (*
 Realizer [l](var_of_nat (find_free l O)).
 *)
 intros.
 elim (find_free l 0); intros; auto with coc.
 exists (var_of_nat x); trivial.
-Qed.
+Defined.
 
 
   Definition name_unique l :=

@@ -23,7 +23,7 @@ Require Import Conv_Dec.
 
 Load "ImpVar".
 
-  Lemma red_to_sort :
+  Definition red_to_sort :
    forall t,
    sn t -> {s : sort | red t (Srt s)} + {(forall s, ~ conv t (Srt s))}.
 intros t snt.
@@ -66,10 +66,10 @@ apply red_sort_sort with s (Prod T U); auto with coc.
 discriminate.
 
 apply trans_conv_conv with t; auto with coc.
-Qed.
+Defined.
 
 
-  Lemma red_to_prod :
+  Definition red_to_prod :
    forall t,
    sn t ->
    {p : term * term | match p with
@@ -114,7 +114,7 @@ discriminate H3.
 apply trans_conv_conv with t; auto with coc.
 
 left; exists (T, U); trivial.
-Qed.
+Defined.
 
 Section TypeChecker.
 
@@ -284,7 +284,7 @@ elim H2 with s2; auto with coc v62.
 Qed.
 
 
-  Theorem infer :
+  Definition infer :
    forall e t,
    wf e ->
    {T : term | typ e t T} +
@@ -529,7 +529,7 @@ intros (err, expl_err, inf_err).
 right.
 exists err; auto with coc v62.
 apply Infe_subt with a; auto with coc v62.
-Qed.
+Defined.
 
 
 
@@ -559,7 +559,7 @@ inversion_clear H0; auto with coc v62.
 Qed.
 
 
-  Lemma check_typ :
+  Definition check_typ :
    forall e t (tp : term),
    wf e ->
    {err : type_error | expln e err &  chk_error t tp err} + {typ e t tp}.
@@ -644,7 +644,7 @@ exists err; auto with coc v62.
 intros (err, expl_err, inf_err).
 left.
 exists err; auto with coc v62.
-Qed.
+Defined.
 
 
 
@@ -670,7 +670,7 @@ elim H3 with s; auto with coc v62.
 Qed.
 
 
-  Lemma add_typ :
+  Definition add_typ :
    forall e t,
    wf e ->
    {err : type_error | expln e err &  decl_error t err} + {wf (t :: e)}.
@@ -696,7 +696,7 @@ apply type_sn with e t; auto with coc.
 intros (err, expl_err, inf_err).
 left.
 exists err; auto with coc v62.
-Qed.
+Defined.
 
 
 End TypeChecker.

@@ -160,7 +160,7 @@ Qed.
 
 
 
-Lemma list_item :
+Definition list_item :
  forall (e : List) (n : nat),
  {t : A | item t e n} + {(forall t : A, ~ item t e n)}.
 
@@ -176,7 +176,7 @@ intros; right.
 red in |- *; intros.
 inversion_clear H.
 apply (n0 t); auto.
-Qed.
+Defined.
 
 
 
@@ -222,7 +222,7 @@ Qed.
  
   Hypothesis eq_dec : forall x y : A, {x = y} + {x <> y}.
 
-  Lemma list_index :
+  Definition list_index :
    forall (x : A) (l : List), {n : nat | first_item x l n} + {~ In x l}.
 
 refine
@@ -249,7 +249,7 @@ elim found; auto with coc.
 red in |- *; intros; apply not_tail.
 inversion H; auto with coc.
 elim notfound; trivial.
-Qed.
+Defined.
 
 End Listes.
 

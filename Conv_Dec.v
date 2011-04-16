@@ -92,8 +92,9 @@ Qed.
     | Prod T U => Prod (norm T) (norm U)
     end.
 
-  Theorem compute_nf :
+  Definition compute_nf :
    forall t : term, sn t -> {u : term | red t u &  normal u}.
+Proof.
 intros.
 elimtype (Acc ord_norm t).
 clear H t.
@@ -158,18 +159,18 @@ elim nT with N1; trivial.
 elim nU with N2; trivial.
 
 apply wf_ord_norm; auto with coc.
-Qed.
+Defined.
 
-  Lemma eqterm : forall u v : term, {u = v} + {u <> v}.
+  Definition eqterm : forall u v : term, {u = v} + {u <> v}.
 Proof.
 decide equality.
 decide equality.
 apply eq_nat_dec.
-Qed.
+Defined.
 
 
 
-  Theorem is_conv :
+  Definition is_conv :
    forall u v : term, sn u -> sn v -> {conv u v} + {~ conv u v}.
 Proof.
 intros u v snu snv.
@@ -188,4 +189,4 @@ rewrite (red_normal v' x); auto with coc.
 apply trans_conv_conv with v; auto with coc.
 apply trans_conv_conv with u; auto with coc.
 apply sym_conv; auto with coc.
-Qed.
+Defined.

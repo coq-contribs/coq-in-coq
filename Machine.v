@@ -39,7 +39,7 @@ exact wf_nil.
 
 red in |- *; intros.
 inversion H.
-Qed.
+Defined.
 
 
   Record state_ext (x : name) (t : term) (s0 s1 : state) : Prop := 
@@ -438,7 +438,7 @@ Qed.
     ({c : command | synthesis_trans si a c} +
      {err : perror | synth_error si a err})%type.
 
-  Theorem synthesis : forall (si : state) (a : ast), synth_answer si a.
+  Definition synthesis : forall (si : state) (a : ast), synth_answer si a.
 (*
 Realizer [si:state][a:ast]
   Cases a of
@@ -507,7 +507,7 @@ exists LIST; auto with coc core arith datatypes.
 
 left.
 exists QUIT; auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
 
@@ -518,7 +518,7 @@ Qed.
      end} + {e : error | com_error si c e})%type.
 
 
-  Lemma exec_infer : forall (s : state) (m : term), com_answer s (INFER m).
+  Definition exec_infer : forall (s : state) (m : term), com_answer s (INFER m).
 (*
 Realizer
   [s:state][m:term]Cases (infer (glob_ctx s) m) of
@@ -537,10 +537,10 @@ apply Tr_infer; auto with coc core arith datatypes.
 right.
 inversion_clear b.
 exists (Type_error x); auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
-  Lemma exec_check :
+  Definition exec_check :
    forall (s : state) (m t : term), com_answer s (CHECK m t).
 (*
 Realizer
@@ -558,10 +558,10 @@ exists (Type_error x); auto with coc core arith datatypes.
 
 left.
 exists (s, Correct); auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
-  Lemma exec_axiom :
+  Definition exec_axiom :
    forall (s : state) (x : name) (t : term), com_answer s (AXIOM x t).
 (*
 Realizer
@@ -609,11 +609,11 @@ simpl in |- *.
 elim glob_length with s; auto with coc core arith datatypes.
 
 apply fv_ext; auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
 
-  Lemma exec_delete : forall s : state, com_answer s DELETE.
+  Definition exec_delete : forall s : state, com_answer s DELETE.
 (*
 Realizer [s:state]Cases (glob_ctx s) (glob_names s) of
     (cons _ e) (cons x l) => (NewState (Build_state e l) (Delete_axiom x))
@@ -659,11 +659,11 @@ generalize (glob_length s).
 elim H.
 elim H0; simpl in |- *; intros.
 injection H1; auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
 
-  Theorem interp_command : forall (si : state) (c : command), com_answer si c.
+  Definition interp_command : forall (si : state) (c : command), com_answer si c.
 simple induction c.
 exact (exec_infer si).
 exact (exec_check si).
@@ -684,10 +684,10 @@ Realizer [si:state][c:command]
   end.
 Program_all. 
 *)
-Qed.
+Defined.
 
 
-  Lemma transl_message :
+  Definition transl_message :
    forall (s : state) (im : message),
    (exists c : command, (exists sf : state, transition s c sf im)) ->
    {m : pmessage | transl_msg s im m}.
@@ -704,11 +704,11 @@ exists Pcorrect; auto with coc.
 intro x; exists (Pdelete_axiom x); auto with coc.
 intro l; exists (Pcontext_listing l); auto with coc.
 exists Pexiting; auto with coc.
-Qed.
+Defined.
 
 
 
-  Lemma transl_ty_error :
+  Definition transl_ty_error :
    forall (err : type_error) (s : state),
    expln (glob_ctx s) err ->
    {perr : ptype_error | transl_type_error (glob_names s) perr err}.
@@ -839,14 +839,15 @@ apply type_free_db with t; auto with coc core arith datatypes.
 inversion_clear H.
 elim glob_length with s.
 apply typ_free_db with (Prod a b); auto with coc core arith datatypes.
-Qed.
+Defined.
 
 
-  Lemma transl_error :
+  Definition transl_error :
    forall (s : state) (err : error),
    (forall terr : type_error,
     err = Type_error terr -> expln (glob_ctx s) terr) ->
    {perr : perror | transl_err s err perr}.
+Proof.
 simple induction err.
 intro x; exists (Pname_clash x); auto with coc.
 intros er H; elim (transl_ty_error er s); auto with coc.
@@ -862,10 +863,10 @@ Realizer [s:state][err:error]
   end.
 Program_all.
 *)
-Qed.
+Defined.
 
 
-  Theorem interp_ast : forall (si : state) (a : ast), answer si a.
+  Definition interp_ast : forall (si : state) (a : ast), answer si a.
 (*
 Realizer [si:state][a:ast]
   Cases (synthesis si a) of
@@ -900,4 +901,4 @@ inversion_clear H0; auto with coc core arith datatypes.
 right.
 inversion_clear b.
 exists x; auto with coc core arith datatypes.
-Qed.
+Defined.
