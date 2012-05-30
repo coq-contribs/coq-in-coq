@@ -37,4 +37,4 @@ COQE = "$(COQBIN)coqtop $(COQLIBS) $(COQFLAGS) -batch -load-vernac-source"
        "@echo '***** test: checking the proof of the Newman lemma *****'
 	./coc < newman.coc
 	@echo '******************** End of test ***********************'"
-  "" test
+  "coc" test
