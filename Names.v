@@ -145,7 +145,7 @@ clear l.
 intros l acc_hyp ffv n.
 refine
  match rmv (var_of_nat n) l with
- | inleft (exist l1 rmvd) =>
+ | inleft (exist l1 rmvd as s) =>
      match ffv l1 _ (S n) with
      | exist2 m m_le m_notin => exist2 _ _ m _ _
      end
