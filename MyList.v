@@ -18,6 +18,7 @@ Require Import Le.
 Require Import Gt.
 Require Export List.
 
+Unset Standard Proposition Elimination Names.
 Global Set Asymmetric Patterns.
 
 Section Listes.

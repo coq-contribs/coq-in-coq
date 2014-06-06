@@ -64,7 +64,7 @@ rewrite H3.
 generalize ip it H2.
 clear H3 Hle H2 it ip H1 t0.
 elim H4.
-intros l ip it (in_interp);
+intros l ip it (in_interp, p, q); revert p q;
   (* Do not intro other fields *)
  inversion_clear in_interp; simpl in |- *; intros ip_can_adapted same_classes.
 apply eq_cand_incl with (int_typ x ip0 PROP);
@@ -72,7 +72,7 @@ apply eq_cand_incl with (int_typ x ip0 PROP);
 unfold lift in |- *.
 apply lift_int_typ with y; auto with coc core arith datatypes.
 
-intros l n y H1 H2 ip it (in_interp); inversion_clear in_interp;
+intros l n y H1 H2 ip it (in_interp, p, q); revert p q; inversion_clear in_interp;
  simpl in |- *; intros ip_can_adapted same_classes.
 simpl in |- *.
 rewrite simpl_lift.

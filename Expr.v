@@ -19,6 +19,8 @@ Require Import MyList.
 Require Import Termes.
 Require Export Names.
 
+Unset Standard Proposition Elimination Names.
+
   (* external level *)
 
   Inductive expr : Set :=
