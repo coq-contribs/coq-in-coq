@@ -23,18 +23,18 @@ ETypes.v
 Equiv.v
 # ML files
 CAML = "$(CAMLOPTC) $(PP)"
--custom "$(CAML) top.ml" "top.ml core.cmx" top.cmx
--custom "$(CAMLOPTC) core.mli" "core.ml" core.cmi
--custom "$(CAMLOPTC) core.ml" "core.cmi" core.cmx
+-extra top.cmx "top.ml core.cmx" "$(CAML) $<"
+-extra core.cmi core.mli "$(CAMLOPTC) $<"
+-extra core.cmx "core.ml core.cmi" "$(CAMLOPTC) $<"
 # COQE is used for building core.ml : we do not want an Extract.vo
 # to be produced
 COQE = "$(COQBIN)coqtop $(COQLIBS) $(COQFLAGS) -batch -load-vernac-source"
--custom "$(COQE) Extract.v" Machine.vo core.ml
+-extra "core.ml core.mli" "Extract.v Machine.vo" "$(COQE) $<"
 # building coc
--custom "$(CAMLOPTLINK) -o $@ core.cmx top.cmx" "core.cmx top.cmx" coc
+-extra coc "core.cmx top.cmx" "$(CAMLOPTLINK) -o $@ $^"
 # the test :
--custom
+-extra-phony test coc
        "@echo '***** test: checking the proof of the Newman lemma *****'
 	./coc < newman.coc
 	@echo '******************** End of test ***********************'"
-  "coc" test
+-extra-phony all test ""
