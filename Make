@@ -1,4 +1,5 @@
 -R . CoqInCoq
+
 # List of vernac files to compile
 MyList.v
 ListType.v
@@ -21,17 +22,21 @@ Machine.v
 Ered.v
 ETypes.v
 Equiv.v
+
 # ML files
 CAML = "$(CAMLOPTC) $(PP)"
 -extra top.cmx "top.ml core.cmx" "$(CAML) $<"
 -extra core.cmi core.mli "$(CAMLOPTC) $<"
 -extra core.cmx "core.ml core.cmi" "$(CAMLOPTC) $<"
+
 # COQE is used for building core.ml : we do not want an Extract.vo
 # to be produced
 COQE = "$(COQBIN)coqtop $(COQLIBS) $(COQFLAGS) -batch -load-vernac-source"
 -extra "core.ml core.mli" "Extract.v Machine.vo" "$(COQE) $<"
+
 # building coc
 -extra coc "core.cmx top.cmx" "$(CAMLOPTLINK) -o $@ $^"
+
 # the test :
 -extra-phony test coc
        "@echo '***** test: checking the proof of the Newman lemma *****'
