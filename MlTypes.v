@@ -40,13 +40,13 @@
 
   Lemma dangerous_int_injection :
    forall i j : nat, int_of_nat i = int_of_nat j -> i = j.
-simple induction i; simple destruct j; simpl in |- *; intros; auto with v62.
-elim dangerous_discr with (int_of_nat n); auto with v62.
+simple induction i; simple destruct j; simpl in |- *; intros; auto.
+elim dangerous_discr with (int_of_nat n); auto.
 
-elim dangerous_discr with (int_of_nat n); auto with v62.
+elim dangerous_discr with (int_of_nat n); auto.
 
-elim H with n0; auto with v62.
-apply ml_int_pred; auto with v62.
+elim H with n0; auto.
+apply ml_int_pred; auto.
 Qed.
 
 
