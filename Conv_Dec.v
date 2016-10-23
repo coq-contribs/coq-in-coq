@@ -28,7 +28,7 @@ Require Import Conv.
 
 
   Lemma subterm_ord_norm : forall a b : term, subterm a b -> ord_norm a b.
-auto 10 with coc v62.
+auto 10 with coc sets.
 Qed.
 
   Hint Resolve subterm_ord_norm: coc.
@@ -37,8 +37,8 @@ Qed.
   Lemma red_red1_ord_norm :
    forall a b : term, red a b -> forall c : term, red1 b c -> ord_norm c a.
 red in |- *.
-simple induction 1; intros; auto with coc v62.
-apply t_trans with N; auto with coc v62.
+simple induction 1; intros; auto with coc sets.
+apply t_trans with N; auto with coc sets.
 Qed.
 
 
@@ -50,18 +50,18 @@ inversion_clear H; inversion_clear H0.
 
 inversion_clear H; inversion_clear H0.
 
-inversion_clear H1; inversion_clear H2; auto with coc v62.
+inversion_clear H1; inversion_clear H2; auto with coc sets.
 
-inversion_clear H1; inversion_clear H2; auto with coc v62.
+inversion_clear H1; inversion_clear H2; auto with coc sets.
 
-inversion_clear H1; inversion_clear H2; auto with coc v62.
+inversion_clear H1; inversion_clear H2; auto with coc sets.
 Qed.
 
 
   Lemma wf_ord_norm1 : forall t : term, sn t -> Acc ord_norm1 t.
 unfold ord_norm1 in |- *.
 intros.
-apply Acc_union; auto with coc v62.
+apply Acc_union; auto with coc sets.
 exact commut_red1_subterm.
 
 intros.
@@ -73,7 +73,7 @@ Qed.
 unfold ord_norm in |- *.
 intros.
 apply Acc_clos_trans.
-apply wf_ord_norm1; auto with coc v62.
+apply wf_ord_norm1; auto with coc sets.
 Qed.
 
 

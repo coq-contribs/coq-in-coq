@@ -164,23 +164,23 @@ Section TypeChecker.
     Exp_fun Exp_appl_err: coc.
 
   Lemma expln_wf : forall e (err : type_error), expln e err -> wf e.
-simple induction 1; intros; auto with coc v62.
+simple induction 1; intros; auto with coc arith.
 inversion_clear H1.
-apply typ_wf with t (Srt s); auto with coc v62.
+apply typ_wf with t (Srt s); auto with coc arith.
 
-apply typ_wf with m at_; auto with coc v62.
+apply typ_wf with m at_; auto with coc arith.
 
 cut (wf (t :: e0)); intros.
 inversion_clear H1.
-apply typ_wf with t (Srt s); auto with coc v62.
+apply typ_wf with t (Srt s); auto with coc arith.
 
-apply typ_wf with m (Srt kind); auto with coc v62.
+apply typ_wf with m (Srt kind); auto with coc arith.
 
-apply typ_wf with m t; auto with coc v62.
+apply typ_wf with m t; auto with coc arith.
 
-apply typ_wf with m t; auto with coc v62.
+apply typ_wf with m t; auto with coc arith.
 
-apply typ_wf with v tv; auto with coc v62.
+apply typ_wf with v tv; auto with coc arith.
 Qed.
 
   Inductive inf_error : term -> type_error -> Prop :=
@@ -213,74 +213,74 @@ Qed.
    inf_error m err -> forall e, expln e err -> forall t, ~ typ e m t.
 simple induction 1; intros.
 inversion_clear H0; red in |- *; intros.
-apply inv_typ_abs with e m0 n0 t; intros; auto with coc v62.
-elim H2 with e (Srt s1); auto with coc v62.
+apply inv_typ_abs with e m0 n0 t; intros; auto with coc arith.
+elim H2 with e (Srt s1); auto with coc arith.
 
-apply inv_typ_app with e m0 v t; intros; auto with coc v62.
-elim H2 with e (Prod V Ur); auto with coc v62.
+apply inv_typ_app with e m0 v t; intros; auto with coc arith.
+elim H2 with e (Prod V Ur); auto with coc arith.
 
-apply inv_typ_app with e u m0 t; intros; auto with coc v62.
-elim H2 with e V; auto with coc v62.
+apply inv_typ_app with e u m0 t; intros; auto with coc arith.
+elim H2 with e V; auto with coc arith.
 
-apply inv_typ_prod with e m0 n0 t; intros; auto with coc v62.
-elim H2 with e (Srt s1); auto with coc v62.
+apply inv_typ_prod with e m0 n0 t; intros; auto with coc arith.
+elim H2 with e (Srt s1); auto with coc arith.
 
 inversion_clear H3.
 inversion_clear H0; red in |- *; intros.
-apply inv_typ_abs with e T m0 t; intros; auto with coc v62.
-elim H2 with (T :: e) T0; auto with coc v62.
+apply inv_typ_abs with e T m0 t; intros; auto with coc arith.
+elim H2 with (T :: e) T0; auto with coc arith.
 
-apply inv_typ_prod with e T m0 t; intros; auto with coc v62.
-elim H2 with (T :: e) (Srt s2); auto with coc v62.
+apply inv_typ_prod with e T m0 t; intros; auto with coc arith.
+elim H2 with (T :: e) (Srt s2); auto with coc arith.
 
-inversion_clear H0; auto with coc v62.
+inversion_clear H0; auto with coc arith.
 
 red in |- *; intros.
-apply inv_typ_ref with e t n; intros; auto with coc v62.
+apply inv_typ_ref with e t n; intros; auto with coc arith.
 inversion_clear H0.
 generalize H5.
-elim H2; simpl in |- *; intros; auto with coc v62.
+elim H2; simpl in |- *; intros; auto with coc arith.
 inversion_clear H0.
 
 inversion_clear H0.
 red in |- *; intros.
-apply inv_typ_abs with e T M t; intros; auto with coc v62.
-elim inv_typ_conv_kind with (T :: e) T0 (Srt s2); auto with coc v62.
-apply typ_unique with (T :: e) M; auto with coc v62.
+apply inv_typ_abs with e T M t; intros; auto with coc arith.
+elim inv_typ_conv_kind with (T :: e) T0 (Srt s2); auto with coc arith.
+apply typ_unique with (T :: e) M; auto with coc arith.
 
 inversion_clear H0.
 red in |- *; intros.
-apply inv_typ_abs with e m0 n t0; intros; auto with coc v62.
-elim H2 with s1; auto with coc v62.
+apply inv_typ_abs with e m0 n t0; intros; auto with coc arith.
+elim H2 with s1; auto with coc arith.
 
 inversion_clear H0.
 red in |- *; intros.
-apply inv_typ_app with e m0 n t0; intros; auto with coc v62.
-elim H2 with V Ur; auto with coc v62.
+apply inv_typ_app with e m0 n t0; intros; auto with coc arith.
+elim H2 with V Ur; auto with coc arith.
 
 inversion_clear H0.
 red in |- *; intros.
-apply inv_typ_app with e m0 n t; intros; auto with coc v62.
-elim type_case with e m0 (Prod a b); intros; auto with coc v62.
+apply inv_typ_app with e m0 n t; intros; auto with coc arith.
+elim type_case with e m0 (Prod a b); intros; auto with coc arith.
 inversion_clear H7.
-apply inv_typ_prod with e a b (Srt x); intros; auto with coc v62.
+apply inv_typ_prod with e a b (Srt x); intros; auto with coc arith.
 apply H3.
-apply type_conv with V s1; auto with coc v62.
+apply type_conv with V s1; auto with coc arith.
 apply inv_conv_prod_l with Ur b.
-apply typ_unique with e m0; auto with coc v62.
+apply typ_unique with e m0; auto with coc arith.
 
 discriminate H7.
 
 inversion_clear H0.
 red in |- *; intros.
-apply inv_typ_prod with e m0 n t0; intros; auto with coc v62.
-elim H2 with s1; auto with coc v62.
+apply inv_typ_prod with e m0 n t0; intros; auto with coc arith.
+elim H2 with s1; auto with coc arith.
 
 inversion_clear H0.
 inversion_clear H1.
 red in |- *; intros.
-apply inv_typ_prod with e m0 n t0; intros; auto with coc v62.
-elim H2 with s2; auto with coc v62.
+apply inv_typ_prod with e m0 n t0; intros; auto with coc arith.
+elim H2 with s2; auto with coc arith.
 Qed.
 
 
@@ -343,192 +343,192 @@ intros t e wfe.
 case t.
 simple destruct s.
 right.
-exists Kind_ill_typed; auto with coc v62.
-apply Exp_kind; intros; auto with coc v62.
+exists Kind_ill_typed; auto with coc arith.
+apply Exp_kind; intros; auto with coc arith.
 apply inv_typ_kind.
 
 left.
 exists (Srt kind).
-apply type_prop; auto with coc v62.
+apply type_prop; auto with coc arith.
 
 left.
 exists (Srt kind).
-apply type_set; auto with coc v62.
+apply type_set; auto with coc arith.
 
 intros.
 generalize (list_item term e n); intros [(T, H0)| b].
 left.
 exists (lift (S n) T).
-apply type_var; auto with coc v62.
-exists T; auto with coc v62.
+apply type_var; auto with coc arith.
+exists T; auto with coc arith.
 
 right.
-exists (Db_error n); auto with coc v62.
-apply Exp_db; auto with coc v62.
+exists (Db_error n); auto with coc arith.
+apply Exp_db; auto with coc arith.
 generalize n b.
-elim e; simpl in |- *; auto with coc v62.
+elim e; simpl in |- *; auto with coc arith.
 simple destruct n0; intros.
-elim b0 with a; auto with coc v62.
+elim b0 with a; auto with coc arith.
 
-cut (length l <= n1); auto with coc v62.
+cut (length l <= n1); auto with coc arith.
 apply H.
 red in |- *; intros.
-elim b0 with t0; auto with coc v62.
+elim b0 with t0; auto with coc arith.
 
 intros a b.
-elim (infer a e); trivial with coc v62.
+elim (infer a e); trivial with coc arith.
 intros (T, ty_a).
-elim (red_to_sort T); trivial with coc v62.
+elim (red_to_sort T); trivial with coc arith.
 intros (s, srt_T).
 cut (wf (a :: e)); intros.
-elim (infer b (a :: e)); trivial with coc v62.
+elim (infer b (a :: e)); trivial with coc arith.
 intros (B, ty_b).
 elim (eqterm (Srt kind) B).
 intro eq_kind.
 right.
-exists (Lambda_kind (Abs a b)); auto with coc v62.
-apply Exp_lam_kind; auto with coc v62.
-rewrite eq_kind; auto with coc v62.
+exists (Lambda_kind (Abs a b)); auto with coc arith.
+apply Exp_lam_kind; auto with coc arith.
+rewrite eq_kind; auto with coc arith.
 
 intro not_kind.
 left.
 exists (Prod a B).
 elim type_case with (1 := ty_b).
 intros (s2, knd_b).
-apply type_abs with s s2; auto with coc v62.
-apply type_reduction with T; auto with coc v62.
+apply type_abs with s s2; auto with coc arith.
+apply type_reduction with T; auto with coc arith.
 
 intros; elim not_kind; auto.
 
 intros (err, expl_err, inf_err).
 right.
-exists (Under a err); auto with coc v62.
-apply Infe_under with b; auto with coc v62.
+exists (Under a err); auto with coc arith.
+apply Infe_under with b; auto with coc arith.
 
 apply wf_var with s.
-apply type_reduction with T; auto with coc v62.
+apply type_reduction with T; auto with coc arith.
 
 intro not_type.
 right.
-exists (Not_a_type a T); auto with coc v62.
-apply Exp_type; auto with coc v62.
+exists (Not_a_type a T); auto with coc arith.
+apply Exp_type; auto with coc arith.
 red in |- *; intros.
 elim not_type with s.
-apply typ_unique with e a; auto with coc v62.
+apply typ_unique with e a; auto with coc arith.
 
-apply type_sn with e a; auto with coc v62.
+apply type_sn with e a; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 right.
-exists err; auto with coc v62.
-apply Infe_subt with a; auto with coc v62.
+exists err; auto with coc arith.
+apply Infe_subt with a; auto with coc arith.
 
 intros u v.
-elim infer with u e; trivial with coc v62.
+elim infer with u e; trivial with coc arith.
 intros (T, ty_u).
 elim red_to_prod with T.
 intros ((V, Ur), red_prod).
 cut (typ e u (Prod V Ur)); intros.
-elim infer with v e; trivial with coc v62.
+elim infer with v e; trivial with coc arith.
 intros (B, ty_v).
 elim is_conv with V B.
 intros domain_conv.
 left.
 exists (subst v Ur).
-apply type_app with V; auto with coc v62.
-elim type_case with e u (Prod V Ur); auto with coc v62.
+apply type_app with V; auto with coc arith.
+elim type_case with e u (Prod V Ur); auto with coc arith.
 intros (s, ty_prod).
-apply inv_typ_prod with (1 := ty_prod); auto with coc v62; intros.
-apply type_conv with B s1; auto with coc v62.
+apply inv_typ_prod with (1 := ty_prod); auto with coc arith; intros.
+apply type_conv with B s1; auto with coc arith.
 
 intro not_prod; discriminate not_prod.
 
 intro dom_not_conv.
 right.
-exists (Apply_err u (Prod V Ur) v B); auto with coc v62.
-apply Exp_appl_err; auto with coc v62.
+exists (Apply_err u (Prod V Ur) v B); auto with coc arith.
+apply Exp_appl_err; auto with coc arith.
 red in |- *; intros.
 apply dom_not_conv.
-apply typ_unique with e v; auto with coc v62.
+apply typ_unique with e v; auto with coc arith.
 
-apply subterm_sn with (Prod V Ur); auto with coc v62.
-apply sn_red_sn with T; auto with coc v62.
-apply type_sn with e u; auto with coc v62.
+apply subterm_sn with (Prod V Ur); auto with coc arith.
+apply sn_red_sn with T; auto with coc arith.
+apply type_sn with e u; auto with coc arith.
 
-apply type_sn with e v; auto with coc v62.
+apply type_sn with e v; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 right.
-exists err; auto with coc v62.
-apply Infe_subt with v; auto with coc v62.
+exists err; auto with coc arith.
+apply Infe_subt with v; auto with coc arith.
 
-apply type_reduction with T; auto with coc v62.
+apply type_reduction with T; auto with coc arith.
 
 intros not_prod.
 right.
-exists (Not_a_fun u T); auto with coc v62.
-apply Exp_fun; auto with coc v62.
+exists (Not_a_fun u T); auto with coc arith.
+apply Exp_fun; auto with coc arith.
 red in |- *; intros.
 elim not_prod with a b.
-apply typ_unique with e u; auto with coc v62.
+apply typ_unique with e u; auto with coc arith.
 
-apply type_sn with e u; auto with coc v62.
+apply type_sn with e u; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 right.
-exists err; auto with coc v62.
-apply Infe_subt with u; auto with coc v62.
+exists err; auto with coc arith.
+apply Infe_subt with u; auto with coc arith.
 
 intros a b.
-elim infer with a e; trivial with coc v62.
+elim infer with a e; trivial with coc arith.
 intros (T, ty_a).
 elim red_to_sort with T.
 intros (s, red_sort).
 cut (wf (a :: e)); intros.
-elim infer with b (a :: e); trivial with coc v62.
+elim infer with b (a :: e); trivial with coc arith.
 intros (B, ty_b).
 elim red_to_sort with B.
 intros (s2, red_s2).
 left.
 exists (Srt s2).
-apply type_prod with s; auto with coc v62.
-apply type_reduction with T; auto with coc v62.
+apply type_prod with s; auto with coc arith.
+apply type_reduction with T; auto with coc arith.
 
-apply type_reduction with B; auto with coc v62.
+apply type_reduction with B; auto with coc arith.
 
 intros b_not_type.
 right.
-exists (Under a (Not_a_type b B)); auto with coc v62.
-apply Exp_under; auto with coc v62.
-apply Exp_type; auto with coc v62.
+exists (Under a (Not_a_type b B)); auto with coc arith.
+apply Exp_under; auto with coc arith.
+apply Exp_type; auto with coc arith.
 red in |- *; intros.
 elim b_not_type with s0.
-apply typ_unique with (a :: e) b; auto with coc v62.
+apply typ_unique with (a :: e) b; auto with coc arith.
 
-apply type_sn with (a :: e) b; auto with coc v62.
+apply type_sn with (a :: e) b; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 right.
-exists (Under a err); auto with coc v62.
-apply Infe_under with b; auto with coc v62.
+exists (Under a err); auto with coc arith.
+apply Infe_under with b; auto with coc arith.
 
 apply wf_var with s.
-apply type_reduction with T; auto with coc v62.
+apply type_reduction with T; auto with coc arith.
 
 intros a_not_type.
 right.
-exists (Not_a_type a T); auto with coc v62.
-apply Exp_type; auto with coc v62.
+exists (Not_a_type a T); auto with coc arith.
+apply Exp_type; auto with coc arith.
 red in |- *; intros.
 elim a_not_type with s.
-apply typ_unique with e a; auto with coc v62.
+apply typ_unique with e a; auto with coc arith.
 
-apply type_sn with e a; auto with coc v62.
+apply type_sn with e a; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 right.
-exists err; auto with coc v62.
-apply Infe_subt with a; auto with coc v62.
+exists err; auto with coc arith.
+apply Infe_subt with a; auto with coc arith.
 Defined.
 
 
@@ -548,14 +548,14 @@ Defined.
    forall e (m : term) t (err : type_error),
    chk_error m t err -> expln e err -> ~ typ e m t.
 simple destruct 1; intros.
-apply inf_error_no_type with err0; auto with coc v62.
+apply inf_error_no_type with err0; auto with coc arith.
 
 red in |- *; intros.
-elim type_case with e m t; intros; auto with coc v62.
+elim type_case with e m t; intros; auto with coc arith.
 inversion_clear H4.
-elim inf_error_no_type with t err0 e (Srt x); auto with coc v62.
+elim inf_error_no_type with t err0 e (Srt x); auto with coc arith.
 
-inversion_clear H0; auto with coc v62.
+inversion_clear H0; auto with coc arith.
 Qed.
 
 
@@ -581,7 +581,7 @@ Realizer [e:env][t,tp:term]
   end.
 *)
 intros.
-elim infer with e t; auto with coc v62.
+elim infer with e t; auto with coc arith.
 intros (tp', typ_t).
 elim eqterm with (Srt kind) tp.
 intros cast_kind.
@@ -593,10 +593,10 @@ elim cast_kind; rewrite inf_kind; trivial.
 intros inf_not_kind.
 left.
 exists (Expected_type t tp' tp); auto with coc.
-apply Exp_exp_type; auto with coc v62.
+apply Exp_exp_type; auto with coc arith.
 red in |- *; intros; apply inf_not_kind.
 symmetry  in |- *.
-apply type_kind_not_conv with e t; auto with coc v62.
+apply type_kind_not_conv with e t; auto with coc arith.
 rewrite cast_kind; trivial.
 
 elim cast_kind; auto with coc.
@@ -616,34 +616,34 @@ intros not_sort.
 elim type_case with (1 := typ_t).
 intros (s, kind_inf).
 elim not_sort with s.
-apply typ_conv_conv with e tp tp'; auto with coc v62.
+apply typ_conv_conv with e tp tp'; auto with coc arith.
 
 intros is_kind.
-elim inv_typ_conv_kind with e tp k; auto with coc v62.
-elim is_kind; auto with coc v62.
+elim inv_typ_conv_kind with e tp k; auto with coc arith.
+elim is_kind; auto with coc arith.
 
-apply type_sn with e tp; auto with coc v62.
+apply type_sn with e tp; auto with coc arith.
 
 intros cast_err.
 left.
-exists (Expected_type t tp' tp); auto with coc v62.
-apply Exp_exp_type; auto with coc v62.
+exists (Expected_type t tp' tp); auto with coc arith.
+apply Exp_exp_type; auto with coc arith.
 red in |- *; intros; apply cast_err; apply typ_unique with e t;
- auto with coc v62.
+ auto with coc arith.
 
-apply typ_free_db with k; auto with coc v62.
+apply typ_free_db with k; auto with coc arith.
 
-apply str_norm with e k; auto with coc v62.
+apply str_norm with e k; auto with coc arith.
 
-apply type_sn with e t; auto with coc v62.
-
-intros (err, expl_err, inf_err).
-left.
-exists err; auto with coc v62.
+apply type_sn with e t; auto with coc arith.
 
 intros (err, expl_err, inf_err).
 left.
-exists err; auto with coc v62.
+exists err; auto with coc arith.
+
+intros (err, expl_err, inf_err).
+left.
+exists err; auto with coc arith.
 Defined.
 
 
@@ -662,11 +662,11 @@ Defined.
 red in |- *.
 simple destruct 1; intros.
 inversion_clear H2.
-elim inf_error_no_type with t err0 e (Srt s); auto with coc v62.
+elim inf_error_no_type with t err0 e (Srt s); auto with coc arith.
 
 inversion_clear H0.
 inversion_clear H1.
-elim H3 with s; auto with coc v62.
+elim H3 with s; auto with coc arith.
 Qed.
 
 
@@ -695,7 +695,7 @@ apply type_sn with e t; auto with coc.
 
 intros (err, expl_err, inf_err).
 left.
-exists err; auto with coc v62.
+exists err; auto with coc arith.
 Defined.
 
 
