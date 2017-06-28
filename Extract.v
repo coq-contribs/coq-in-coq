@@ -23,6 +23,7 @@ Require Import Infer.
 Require Import Names.
 Require Import Expr.
 Require Import Machine.
+Require Extraction.
 
 Extract Inductive bool => "bool" [ "true" "false" ].
 Extract Inductive sumbool => "bool" [ "true" "false" ].
