@@ -1,0 +1,29 @@
+all: test
+
+# ML files
+CAML = ocamlopt.opt -pp "camlp5o pr_o.cmo"
+top.cmx: top.ml core.cmx
+	$(CAML) core.cmx $<
+
+core.cmi: core.mli
+	$(CAMLOPTC) $<
+core.cmx: core.ml core.cmi
+	$(CAMLOPTC) $<
+
+# COQE is used for building core.ml: we do not want an Extract.vo
+# to be produced
+COQE = $(COQBIN)coqtop $(COQLIBS) $(COQFLAGS) -batch -load-vernac-source
+
+core.ml core.mli: Extract.v Machine.vo
+	$(COQE) $<
+
+# building coc
+coc: core.cmx top.cmx
+	$(CAMLOPTLINK) -o $@ $^
+
+# the test:
+test: coc
+	@echo '***** test: checking the proof of the Newman lemma *****'
+	./coc < newman.coc
+	@echo '******************** End of test ***********************'
+
