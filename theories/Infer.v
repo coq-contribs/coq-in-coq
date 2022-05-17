@@ -338,7 +338,7 @@ Qed.
 do 2 intro.
 generalize t e.
 clear e t.
-fix 1.
+fix infer 1.
 intros t e wfe.
 case t.
 simple destruct s.

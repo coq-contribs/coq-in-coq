@@ -1,2 +1,14 @@
-coc
-core.ml*
+.lia.cache
+Makefile.coq
+Makefile.coq.conf
+.Makefile.coq.d
+tests/coc
+tests/core.ml*
+tests/*.o
+tests/*.cmx
+tests/*.cmi
+theories/*.aux
+theories/*.glob
+theories/*.vo
+theories/*.vos
+theories/*.vok

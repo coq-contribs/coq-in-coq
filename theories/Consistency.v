@@ -21,7 +21,7 @@ Require Import Conv.
 Require Import Conv_Dec.
 Require Import Strong_Norm.
 
-Require Import Omega.
+Require Import Lia.
 
 Fixpoint applist (l : list term) : term -> term :=
   fun t =>
@@ -222,7 +222,7 @@ intros (n, lt_n, (l, eq_atom)).
 simpl in lt_n.
 generalize eq_atom.
 clear eq_atom.
-replace n with 0; try omega.
+replace n with 0; try lia.
 rewrite <- (rev_involutive l).
 case (rev l); simpl in |- *; intros; rewrite eq_atom in H2.
 (* Case 2.1: the head var of M is not applied *) 

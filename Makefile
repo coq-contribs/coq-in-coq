@@ -3,14 +3,18 @@ all: Makefile.coq
 
 clean: Makefile.coq
 	+make -f Makefile.coq clean
+	+make -C tests clean
 	rm -f Makefile.coq
 
-Makefile.coq: Make
-	$(COQBIN)coq_makefile -f Make -o Makefile.coq
+Makefile.coq: _CoqProject
+	$(COQBIN)coq_makefile -f _CoqProject -o Makefile.coq
 
-Make: ;
+test: theories/Machine.vo
+	+make -C tests all
+
+_CoqProject: ;
 
 %: Makefile.coq
 	+make -f Makefile.coq $@
 
-.PHONY: all clean
+.PHONY: all clean test
