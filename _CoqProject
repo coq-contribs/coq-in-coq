@@ -1,4 +1,4 @@
--R . CoqInCoq
+-R theories CoqInCoq
 
 # List of vernac files to compile
 theories/MyList.v
