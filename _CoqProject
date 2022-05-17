@@ -1,0 +1,24 @@
+-R . CoqInCoq
+
+# List of vernac files to compile
+theories/MyList.v
+theories/ListType.v
+theories/Names.v
+theories/MlTypes.v
+theories/Termes.v
+theories/Conv.v
+theories/Types.v
+theories/Conv_Dec.v
+theories/Class.v
+theories/Can.v
+theories/Int_term.v
+theories/Int_typ.v
+theories/Int_stab.v
+theories/Strong_Norm.v
+theories/Consistency.v
+theories/Infer.v
+theories/Expr.v
+theories/Machine.v
+theories/Ered.v
+theories/ETypes.v
+theories/Equiv.v
