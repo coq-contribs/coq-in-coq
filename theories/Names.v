@@ -16,6 +16,7 @@
 
 Require Import Arith.
 Require Import MyList.
+Require Import Lia.
 Require Export MlTypes.
 
 
@@ -168,10 +169,8 @@ inversion H3; auto with coc.
 constructor; eauto.
 
 red in |- *; intros.
-apply (le_Sn_n n).
-pattern n at 2 in |- *.
-replace n with m; auto with coc core arith datatypes.
-apply inj_var_of_nat; auto with coc core arith datatypes.
+enough (m = n) by lia.
+revert H0; apply inj_var_of_nat.
 Defined.
 
 
