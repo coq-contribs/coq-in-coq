@@ -15,9 +15,10 @@
 
 
 
-Require Export Arith.
+Require Export PeanoNat.
 Require Export Compare_dec.
 Require Export Relations.
+Require Export Lia.
 
 Implicit Types i k m n p : nat.
 
@@ -234,33 +235,20 @@ Qed.
   Lemma subst_ref_lt : forall u n k, k > n -> subst_rec u (Ref n) k = Ref n.
 simpl in |- *; intros.
 elim (lt_eq_lt_dec k n); [ intro a | intro b; auto with coc core arith sets ].
-elim a; clear a; [ intro a | intro b ].
-absurd (k <= n); auto with coc core arith sets.
-
-inversion_clear b in H.
-elim gt_irrefl with n; auto with coc core arith sets.
+intuition lia.
 Qed.
 
 
   Lemma subst_ref_gt :
    forall u n k, n > k -> subst_rec u (Ref n) k = Ref (pred n).
-simpl in |- *; intros.
-elim (lt_eq_lt_dec k n); [ intro a | intro b ].
-elim a; clear a; [ intro a; auto with coc core arith sets | intro b ].
-inversion_clear b in H.
-elim gt_irrefl with n; auto with coc core arith sets.
-
-absurd (k <= n); auto with coc core arith sets.
+    simpl in |- *; intros.
+elim (lt_eq_lt_dec k n); intuition lia.
 Qed.
 
 
   Lemma subst_ref_eq : forall u n, subst_rec u (Ref n) n = lift n u.
 intros; simpl in |- *.
-elim (lt_eq_lt_dec n n); [ intro a | intro b ].
-elim a; intros; auto with coc core arith sets.
-elim lt_irrefl with n; auto with coc core arith sets.
-
-elim gt_irrefl with n; auto with coc core arith sets.
+elim (lt_eq_lt_dec n n); intuition lia.
 Qed.
 
 
@@ -288,22 +276,11 @@ Qed.
    i <= k + n ->
    k <= i -> lift_rec p (lift_rec n M k) i = lift_rec (p + n) M k.
 simple induction M; simpl in |- *; intros; auto with coc core arith sets.
-elim (le_gt_dec k n); intros.
-rewrite lift_ref_ge; auto with coc core arith sets.
+elim (le_gt_dec k n); intros. 
+rewrite lift_ref_ge; solve [auto with coc core arith sets | lia].
+rewrite lift_ref_lt; auto with coc core arith sets. lia.
 
-rewrite plus_comm; apply le_trans with (k + n0);
- auto with coc core arith sets.
-
-rewrite lift_ref_lt; auto with coc core arith sets.
-apply le_gt_trans with k; auto with coc core arith sets.
-
-rewrite H; auto with coc core arith sets; rewrite H0; simpl in |- *;
- auto with coc core arith sets.
-
-rewrite H; auto with coc core arith sets; rewrite H0; simpl in |- *;
- auto with coc core arith sets.
-
-rewrite H; auto with coc core arith sets; rewrite H0; simpl in |- *;
+all : rewrite H; auto with coc core arith sets; rewrite H0; simpl in |- *;
  auto with coc core arith sets.
 Qed.
 
@@ -322,21 +299,19 @@ simple induction M; simpl in |- *; intros; auto with coc core arith sets.
 elim (le_gt_dec k n); elim (le_gt_dec i n); intros.
 rewrite lift_ref_ge; auto with coc core arith sets.
 rewrite lift_ref_ge; auto with coc core arith sets.
-elim plus_assoc_reverse with p n0 n.
-elim plus_assoc_reverse with n0 p n.
-elim plus_comm with p n0; auto with coc core arith sets.
+f_equal. lia.
 
-apply le_trans with n; auto with coc core arith sets.
+apply Nat.le_trans with n; auto with coc core arith sets.
 
 absurd (i <= n); auto with coc core arith sets.
-apply le_trans with k; auto with coc core arith sets.
+apply Nat.le_trans with k; auto with coc core arith sets.
 
 rewrite lift_ref_ge; auto with coc core arith sets.
 rewrite lift_ref_lt; auto with coc core arith sets.
 
 rewrite lift_ref_lt; auto with coc core arith sets.
 rewrite lift_ref_lt; auto with coc core arith sets.
-apply le_gt_trans with k; auto with coc core arith sets.
+lia.
 
 rewrite H; auto with coc core arith sets; rewrite H0;
  auto with coc core arith sets.
@@ -368,10 +343,10 @@ simple induction M; simpl in |- *; intros; auto with coc core arith sets.
 elim (le_gt_dec k n); intros.
 rewrite subst_ref_gt; auto with coc core arith sets.
 red in |- *; red in |- *.
-apply le_trans with (S (n0 + k)); auto with coc core arith sets.
+apply Nat.le_trans with (S (n0 + k)); auto with coc core arith sets.
 
 rewrite subst_ref_lt; auto with coc core arith sets.
-apply le_gt_trans with k; auto with coc core arith sets.
+lia.
 
 rewrite H; auto with coc core arith sets; rewrite H0;
  auto with coc core arith sets.
@@ -412,7 +387,7 @@ rewrite subst_ref_gt; auto with coc core arith sets.
 elim plus_n_Sm with n0 n1.
 auto with coc core arith sets.
 
-apply le_trans with p; auto with coc core arith sets.
+apply Nat.le_trans with p; auto with coc core arith sets.
 
 simple induction 1.
 rewrite subst_ref_eq.
@@ -420,7 +395,7 @@ unfold lift in |- *.
 rewrite simpl_lift_rec; auto with coc core arith sets.
 
 absurd (k <= n); auto with coc core arith sets.
-apply le_trans with p; auto with coc core arith sets.
+apply Nat.le_trans with p; auto with coc core arith sets.
 elim Hlt_eq; auto with coc core arith sets.
 simple induction 1; auto with coc core arith sets.
 
@@ -429,7 +404,7 @@ rewrite subst_ref_lt; auto with coc core arith sets.
 
 rewrite lift_ref_lt; auto with coc core arith sets.
 rewrite subst_ref_lt; auto with coc core arith sets.
-apply le_gt_trans with p; auto with coc core arith sets.
+lia.
 
 simpl in |- *.
 rewrite plus_n_Sm.
@@ -469,8 +444,8 @@ rewrite lift_ref_ge; auto with coc core arith sets.
 elim plus_n_Sm with n0 n1.
 rewrite subst_ref_gt; auto with coc core arith sets.
 red in |- *; red in |- *; apply le_n_S.
-apply le_trans with (n0 + (p + k)); auto with coc core arith sets.
-apply le_trans with (p + k); auto with coc core arith sets.
+apply Nat.le_trans with (n0 + (p + k)); auto with coc core arith sets.
+apply Nat.le_trans with (p + k); auto with coc core arith sets.
 
 rewrite lift_ref_lt; auto with coc core arith sets.
 rewrite subst_ref_gt; auto with coc core arith sets.
@@ -526,7 +501,7 @@ inversion_clear Hlt.
 
 rewrite subst_ref_gt; auto with coc core arith sets.
 rewrite subst_ref_gt; auto with coc core arith sets.
-apply gt_le_trans with (p + n0); auto with coc core arith sets.
+lia.
 
 simple induction 1.
 rewrite subst_ref_eq; auto with coc core arith sets.

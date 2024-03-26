@@ -22,6 +22,7 @@ Require Import Can.
 Require Import Int_term.
 Require Import Int_typ.
 Require Import Int_stab.
+Require Import PeanoNat.
 
 Load "ImpVar".
 
@@ -58,7 +59,7 @@ inversion_clear H2.
 
 elim (le_gt_dec 0 v); [ intro Hle | intro Hgt ].
 rewrite lift0.
-elim minus_n_O with v.
+rewrite Nat.sub_0_r.
 elim H1; intros.
 rewrite H3.
 generalize ip it H2.

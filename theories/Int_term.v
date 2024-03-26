@@ -50,25 +50,21 @@ elim (le_gt_dec (S k) n); intros.
 elim (le_gt_dec k n); intros.
 rewrite simpl_subst; auto with coc core arith sets.
 replace (n - k) with (S (n - S k)); auto with coc core arith sets.
-rewrite minus_Sn_m; auto with coc core arith sets.
+lia.
 
-elim le_not_gt with k n; auto with coc core arith sets.
-
-simpl in |- *.
 elim (lt_eq_lt_dec k n); [ intro Hlt_eq | intro Hlt ].
-elim Hlt_eq; clear Hlt_eq; [ intro Hlt | intro Heq ].
-absurd (n <= k); auto with coc core arith sets.
+elim Hlt_eq; clear Hlt_eq. lia.
 
-elim (le_gt_dec k n); [ intro Hle | intro Hgt ];
- auto with coc core arith sets.
-elim Heq.
-replace (k - k) with 0; auto with coc core arith sets.
-
-inversion_clear Heq in Hgt.
-elim gt_irrefl with n; auto with coc core arith sets.
-
-elim (le_gt_dec k n); intros; auto with coc core arith sets.
-absurd (k <= n); auto with coc core arith sets.
+intros ?; subst.
+replace (n - n) with 0; auto with coc core arith sets. simpl.
+elim (le_gt_dec n n); [ intro Hle | intro Hgt ];
+ auto with coc core arith sets; try lia.
+elim (lt_eq_lt_dec n n); [|];
+ auto with coc core arith sets; try lia.
+intuition lia.
+elim (le_gt_dec k n); intros; auto with coc core arith sets; [lia|].
+simpl.
+elim (lt_eq_lt_dec k n); try intuition lia.
 
 rewrite H; rewrite H0; auto with coc core arith sets.
 

@@ -96,8 +96,8 @@ Qed.
    forall t : term, sn t -> {u : term | red t u &  normal u}.
 Proof.
 intros.
-elimtype (Acc ord_norm t).
-clear H t.
+cut (Acc ord_norm t); [intros _H'; elim _H' |].
+clear _H' H t.
 intros [s| n| T t| u v| T U] _ norm_rec.
 exists (Srt s); auto with coc.
 red in |- *; red in |- *; intros.

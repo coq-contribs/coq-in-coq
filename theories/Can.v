@@ -120,7 +120,7 @@ simple induction 2.
 simple induction 3.
 intros.
 generalize H6.
-elimtype (sn m); intros.
+cut (sn m); [intros H'; elim H' | ]; intros.
 apply (clos_exp X); intros; auto with coc core arith datatypes.
 red in |- *; intros; discriminate.
 
