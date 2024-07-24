@@ -19,8 +19,6 @@ Require Import MyList.
 Require Import Termes.
 Require Export Names.
 
-Unset Standard Proposition Elimination Names.
-
   (* external level *)
 
   Inductive expr : Set :=
@@ -221,7 +219,7 @@ exists (REF x).
 apply eqv_ref.
 apply name_unique_first; auto with coc core arith datatypes.
 
-elimtype False.
+exfalso.
 inversion_clear H0.
 generalize n b H1.
 elim l; simpl in |- *.

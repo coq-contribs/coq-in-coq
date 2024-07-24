@@ -13,7 +13,7 @@ coc: core.ml core.mli top.ml newman.coc
 	@echo '******************** End of test ***********************'
 
 clean:
-	rm core.ml core.mli *.cmx *.cmi *.o
+	rm -f core.ml core.mli *.cmx *.cmi *.o
 
 # Building core.ml : we do not want an Extract.vo to be produced
 core.ml core.mli: Extract.v

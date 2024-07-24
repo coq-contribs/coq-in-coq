@@ -716,7 +716,7 @@ simple induction err; intros.
 elim find_free_var with (glob_names s); intros.
 elim expr_of_term with t (glob_names s); intros;
  auto with coc core arith datatypes.
-elimtype {si : state | state_ext x t s si}; intros.
+cut {si : state | state_ext x t s si}; [intros H'; elim H' | ]; intros.
 elim H with x1; intros.
 exists (Punder x x0 x2).
 apply Tpe_under; auto with coc core arith datatypes.
